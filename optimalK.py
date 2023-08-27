@@ -7,10 +7,10 @@ import math
 from sklearn.metrics import silhouette_score
 from sklearn.cluster import KMeans, SpectralClustering
 
-time = 60 # Define time interval for resampling
+time = 360 # Define time interval for resampling
 
 # Load and preprocess data
-df = pd.read_feather("Data/Residential.feather")
+df = pd.read_feather("Data.feather")
 df.set_index('index', inplace=True)
 df = df.drop(df.index[:7200])  # Remove the first 7200 rows to start on "Monday"
 columns = [col for col in df.columns if col.endswith('txavgbitrate')]
@@ -69,7 +69,7 @@ for k in range(1, 20):
 
 # Plot SSE vs number of clusters
 plt.figure()
-plt.plot(range(1, 20), sse)
+plt.plot(range(1, 10), sse)
 plt.xlabel('Number of Clusters (k)')
 plt.ylabel('Sum of Squared Distances (SSE)')
 plt.title('Elbow Method')
@@ -77,14 +77,14 @@ plt.savefig('Elbow.png')
 
 # Average silhouette method
 silhouette_scores = []
-for n_clusters in range(2, 100):
+for n_clusters in range(2, 10):
     kmeans = KMeans(n_clusters=n_clusters)
     cluster_labels = kmeans.fit_predict(Xm)
     silhouette_scores.append(silhouette_score(Xm, cluster_labels))
 
 plt.figure()
-plt.plot(range(2, 100), silhouette_scores,'o-')
+plt.plot(range(2, 10), silhouette_scores,'o-')
 plt.xlabel('Number of Clusters (k)')
 plt.ylabel('Silhouette Score')
 plt.title('Silhouette Score vs Number of Clusters')
-plt.savefig('Silhuette.png')
+plt.savefig('Silhouette.png')
