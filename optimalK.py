@@ -7,7 +7,7 @@ import math
 from sklearn.metrics import silhouette_score
 from sklearn.cluster import KMeans, SpectralClustering
 
-time = 360 # Define time interval for resampling
+time = 480 # Define time interval for resampling
 
 # Load and preprocess data
 df = pd.read_feather("Data.feather")
